@@ -7,7 +7,7 @@ pipeline {
                     try {
                         timeout(time: 1, unit: 'MINUTES') {
                             echo "timeout step"
-                            sleep 5
+                            sleep 1
                         }
                     } catch(err) {
                         // timeout reached
@@ -24,7 +24,7 @@ pipeline {
                     try {
                         timeout(time: 60, unit: 'SECONDS') {
                             echo "timeout step"
-                            sleep 5
+                            sleep 1
                         }
                     } catch(err) {
                         // timeout reached
@@ -42,6 +42,7 @@ pipeline {
                         timeout(time: 1, unit: 'MINUTES') {
                             echo "timeout step"
                                 sh """
+                                export PATH=$PATH:/opt/homebrew/bin/argocd
                                 argocd app terminate-op app-2 --http-retry-max 50 --grpc-web --loglevel debug --server 127.0.0.1:8000 ||  true
                                 argocd app sync app-2 --http-retry-max 50 --grpc-web --loglevel debug --server 127.0.0.1:8000 --timeout 14400
                                 argocd app wait app-2 --http-retry-max 50 --grpc-web --loglevel debug --health --server 127.0.0.1:8000
