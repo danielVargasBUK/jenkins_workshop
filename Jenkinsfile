@@ -4,10 +4,14 @@ pipeline {
         stage('TimeOutExampleSucess') {
             steps {
                 script {
-                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    try {
                         timeout(time: 1, unit: 'MINUTES') {
-                            sh 'sleep 10' 
+                            sh 'sleep 10'
                         }
+                    } catch (err) {
+                        echo "Stage failed due to timeout: ${err}"
+                        currentBuild.result = 'FAILURE'
+                        error("Stage failed due to timeout.")
                     }
                 }
             }
@@ -15,10 +19,14 @@ pipeline {
         stage('TimeOutExampleFailure') {
             steps {
                 script {
-                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    try {
                         timeout(time: 1, unit: 'MINUTES') {
-                            sh 'sleep 62' 
+                            sh 'sleep 62'
                         }
+                    } catch (err) {
+                        echo "Stage failed due to timeout: ${err}"
+                        currentBuild.result = 'FAILURE'
+                        error("Stage failed due to timeout.")
                     }
                 }
             }
