@@ -1,11 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('TimeOutExampleSucess') {
             steps {
                 script {
-                    docker.image('ruby:3.3.5-alpine3.20').inside {
-                        sh 'ruby --version'
+                    timeout(time: 1, unit: 'MINUTES') {
+                        sh 'sleep 30' 
+                    }
+                }
+            }
+        }
+        stage('TimeOutExampleFailure') {
+            steps {
+                script {
+                    timeout(time: 1, unit: 'MINUTES') {
+                        sh 'sleep 62' 
                     }
                 }
             }
