@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     timeout(time: 1, unit: 'MINUTES', abort: true) {
-                        sh 'sleep 62' 
+                        sh 'sleep 63' 
                     }
                 }
             }
