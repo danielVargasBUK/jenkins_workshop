@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        timeout(time: 1, unit: 'SECONDS') {
+                        timeout(time: 60, unit: 'SECONDS') {
                             echo "timeout step"
                             sleep 5
                         }
