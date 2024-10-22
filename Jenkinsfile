@@ -43,6 +43,7 @@ pipeline {
                             echo "timeout step"
                                 sh """
                                 export PATH=$PATH:/opt/homebrew/bin/argocd
+                                source ~/.zshrc
                                 argocd app terminate-op app-2 --http-retry-max 50 --grpc-web --loglevel debug --server 127.0.0.1:8000 ||  true
                                 argocd app sync app-2 --http-retry-max 50 --grpc-web --loglevel debug --server 127.0.0.1:8000 --timeout 14400
                                 argocd app wait app-2 --http-retry-max 50 --grpc-web --loglevel debug --health --server 127.0.0.1:8000
