@@ -4,7 +4,7 @@ pipeline {
         stage('TimeOutExampleSucess') {
             steps {
                 script {
-                    timeout(time: 1, unit: 'MINUTES') {
+                    timeout(time: 1, unit: 'MINUTES', abort: true) {
                         sh 'sleep 30' 
                     }
                 }
@@ -13,7 +13,7 @@ pipeline {
         stage('TimeOutExampleFailure') {
             steps {
                 script {
-                    timeout(time: 1, unit: 'MINUTES') {
+                    timeout(time: 1, unit: 'MINUTES', abort: true) {
                         sh 'sleep 62' 
                     }
                 }
