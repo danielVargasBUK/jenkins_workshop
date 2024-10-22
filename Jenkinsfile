@@ -6,12 +6,14 @@ pipeline {
                 script {
                     try {
                         timeout(time: 1, unit: 'MINUTES') {
-                            sh 'sleep 10'
+                            echo "timeout step"
+                            sleep 5
                         }
-                    } catch (err) {
-                        echo "Stage failed due to timeout: ${err}"
-                        currentBuild.result = 'FAILURE'
-                        error("Stage failed due to timeout.")
+                    } catch(err) {
+                        // timeout reached
+                        println err
+                        echo 'Time out reached.'
+                        error 'build timeout failed'
                     }
                 }
             }
@@ -20,13 +22,15 @@ pipeline {
             steps {
                 script {
                     try {
-                        timeout(time: 1, unit: 'MINUTES') {
-                            sh 'sleep 62'
+                        timeout(time: 1, unit: 'SECONDS') {
+                            echo "timeout step"
+                            sleep 5
                         }
-                    } catch (err) {
-                        echo "Stage failed due to timeout: ${err}"
-                        currentBuild.result = 'FAILURE'
-                        error("Stage failed due to timeout.")
+                    } catch(err) {
+                        // timeout reached
+                        println err
+                        echo 'Time out reached.'
+                        error 'build timeout failed'
                     }
                 }
             }
