@@ -41,7 +41,6 @@ pipeline {
                     try {
                         timeout(time: 1, unit: 'MINUTES') {
                             echo "timeout step"
-                            argocd app sync app-2 --grpc-web
                                 sh """
                                 argocd app terminate-op app-2 --http-retry-max 50 --grpc-web --loglevel debug --server 127.0.0.1:8000 ||  true
                                 argocd app sync app-2 --http-retry-max 50 --grpc-web --loglevel debug --server 127.0.0.1:8000 --timeout 14400
