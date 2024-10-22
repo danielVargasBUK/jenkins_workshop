@@ -4,8 +4,10 @@ pipeline {
         stage('TimeOutExampleSucess') {
             steps {
                 script {
-                    timeout(time: 1, unit: 'MINUTES', abort: true) {
-                        sh 'sleep 30' 
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        timeout(time: 1, unit: 'MINUTES') {
+                            sh 'sleep 10' 
+                        }
                     }
                 }
             }
@@ -13,8 +15,10 @@ pipeline {
         stage('TimeOutExampleFailure') {
             steps {
                 script {
-                    timeout(time: 1, unit: 'MINUTES', abort: true) {
-                        sh 'sleep 63' 
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        timeout(time: 1, unit: 'MINUTES') {
+                            sh 'sleep 62' 
+                        }
                     }
                 }
             }
