@@ -55,4 +55,7 @@ void checkCommit() {
   ).trim()
     println("El commit ${jenkinsRepoLastCommit} del Jenkinsfile se encuentra en la rama ${env.BRANCH_NAME}")
     println("El commit ${jenkinsRepoLastCommit[0..7]} del Jenkinsfile se encuentra en la rama ${env.BRANCH_NAME}")
+
+    println("El commit del env ${env.GIT_COMMIT}")
+    println("El commit del env ${env.GIT_COMMIT[0..7]}")
 }
