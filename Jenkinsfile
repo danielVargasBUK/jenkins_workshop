@@ -58,4 +58,10 @@ void checkCommit() {
 
     println("El commit del env ${env.GIT_COMMIT}")
     println("El commit del env ${env.GIT_COMMIT[0..7]}")
+
+    if (jenkinsRepoLastCommit != env.GIT_COMMIT) {
+        error "El commit del Jenkinsfile no coincide con el commit del repositorio"
+    }else{
+        println "El commit del Jenkinsfile coincide con el commit del repositorio"
+    }
 }
