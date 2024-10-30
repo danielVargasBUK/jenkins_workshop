@@ -35,28 +35,24 @@ pipeline {
                 }
             }
         }
-        stage('ArgoCD sync') {
+        stage('GET commit SHA') {
             steps {
                 script {
-                    try {
-                        timeout(time: 1, unit: 'MINUTES') {
-                            echo "timeout step"
-                                sh """
-                                export PATH=$PATH:/opt/homebrew/bin/argocd
-                                source ~/.zshrc
-                                argocd app terminate-op app-2 --http-retry-max 50 --grpc-web --loglevel debug --server 127.0.0.1:8000 ||  true
-                                argocd app sync app-2 --http-retry-max 50 --grpc-web --loglevel debug --server 127.0.0.1:8000 --timeout 14400
-                                argocd app wait app-2 --http-retry-max 50 --grpc-web --loglevel debug --health --server 127.0.0.1:8000
-                                """
-                        }
-                    } catch(err) {
-                        // timeout reached
-                        println err
-                        echo 'Time out reached.'
-                        error 'build timeout failed'
-                    }
+                    checkCommit()
                 }
             }
         }
     }
+}
+
+
+
+void checkCommit() {
+  // Obtener el último commit del repositorio donde está el Jenkinsfile
+  String jenkinsRepoLastCommit = sh(
+    script: "git rev-parse HEAD",
+    returnStdout: true
+  ).trim()
+    println("El commit ${jenkinsRepoLastCommit} del Jenkinsfile se encuentra en la rama ${env.BRANCH_NAME}")
+    println("El commit ${jenkinsRepoLastCommit[0..7]} del Jenkinsfile se encuentra en la rama ${env.BRANCH_NAME}")
 }
