@@ -64,4 +64,17 @@ void checkCommit() {
     }else{
         println "El commit del Jenkinsfile coincide con el commit del repositorio"
     }
+
+    // Verificar si la imagen ya existe en EKR
+    def imageExists = sh(
+    script: "docker manifest inspect ubuntu:20.04 > /dev/null 2>&1 && echo 'true' || echo 'false'",
+    returnStdout: true
+    ).trim() == 'true'
+
+    if (imageExists) {
+        println("La imagen ubuntu:20.04 ya existe en EKR. No se realizará el push.")
+        return
+    }else{
+        println("La imagen ubuntu:20.04 no existe en EKR. Se realizará el push.")
+    }
 }
