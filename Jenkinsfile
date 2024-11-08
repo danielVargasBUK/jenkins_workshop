@@ -48,7 +48,7 @@ pipeline {
 
 
 void checkCommit() {
-
+    sh 'git fetch origin'
     String jenkinsRepoLastCommit = sh(
         script: "git rev-parse origin/${env.BRANCH_NAME}",
         returnStdout: true
