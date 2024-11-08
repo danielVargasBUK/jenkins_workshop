@@ -48,14 +48,9 @@ pipeline {
 
 
 void checkCommit() {
-    // Obtener el último commit del repositorio donde está el Jenkinsfile
-    String branchName = sh(
-        script: "git rev-parse --abbrev-ref HEAD",
-        returnStdout: true
-    ).trim()
 
     String jenkinsRepoLastCommit = sh(
-        script: "git rev-parse origin/${branchName}",
+        script: "git rev-parse origin/${env.BRANCH_NAME}",
         returnStdout: true
     ).trim()
     println("El commit ${jenkinsRepoLastCommit} del Jenkinsfile se encuentra en la rama ${env.BRANCH_NAME}")
