@@ -16,7 +16,7 @@ pipeline {
                 script {
                     withTimeout(60, 'SECONDS', {
                         echo "timeout step"
-                        sleep 65 // Esto fallará para probar el timeout
+                        sleep 1 // Esto fallará para probar el timeout
                     }, 'Time out reached for TimeOutExampleFailure.')
                 }
             }
